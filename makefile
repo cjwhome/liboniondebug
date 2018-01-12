@@ -19,8 +19,6 @@ OBJECTS := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCES:.$(SRCEXT)=.o))
 CFLAGS := -g -fPIC # -Wall
 INC := $(shell find $(INCDIR) -maxdepth 1 -type d -exec echo -I {}  \;)
 
-PYINC := "-I/usr/include/python2.7"
-INC += $(PYINC)
 
 # define specific binaries to create
 # C libraries
