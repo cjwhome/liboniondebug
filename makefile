@@ -29,14 +29,7 @@ SOURCE_LIBD := src/lib/onion-debug.$(SRCEXT)
 OBJECT_LIBD := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCE_LIBD:.$(SRCEXT)=.o))
 TARGET_LIBD := $(LIBDIR)/$(LIBD).so
 
-LIB0 := libonioni2c
-SOURCE_LIB0 := src/lib/onion-i2c.$(SRCEXT)
-OBJECT_LIB0 := $(patsubst $(SRCDIR)/%,$(BUILDDIR)/%,$(SOURCE_LIB0:.$(SRCEXT)=.o))
-TARGET_LIB0 := $(LIBDIR)/$(LIB0).so
-LIB_LIB0 := -L$(LIBDIR) -loniondebug
-
-
-all: resp $(TARGET_LIBD) $(TARGET_LIB0)
+all: resp $(TARGET_LIBD)
 
 
 # libraries
@@ -45,10 +38,6 @@ $(TARGET_LIBD): $(OBJECT_LIBD)
 	@mkdir -p $(LIBDIR)
 	$(CC) -shared -o $@  $^ $(LIB_LIBD)
 
-$(TARGET_LIB0): $(OBJECT_LIB0)
-	@echo " Compiling $@"
-	@mkdir -p $(LIBDIR)
-	$(CC) -shared -o $@  $^ $(LIB_LIB0)
 
 # generic: build any object file required
 $(BUILDDIR)/%.o: $(SRCDIR)/%.$(SRCEXT)
@@ -65,10 +54,6 @@ resp:
 	@echo "CFLAGS: $(CFLAGS)"
 	@echo "LDFLAGS: $(LDFLAGS)"
 	@echo "LIB: $(LIB)"
-
-# Tests
-tester:
-	$(CC) $(CFLAGS) test/tester.cpp $(INC) $(LIB) -o bin/tester
 
 # Spikes
 #ticket:
